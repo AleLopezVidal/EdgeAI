@@ -1,6 +1,8 @@
 import cv2
 from deepface import DeepFace
 import matplotlib.pyplot as plt
+import time
+import numpy as np
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
@@ -10,7 +12,13 @@ if not cap.isOpened():
 if not cap.isOpened():
     raise IOError('No se puede abrir la cámara')
 
+Ts = 0.5 #Tiempo de muestreo
+datat = ['Time (s)']
+dataE = ['Emotion']
+
+t0 = time.time() #Tiempo de inicio
 while True:
+    time.sleep(Ts)
     try:
         ret,frame = cap.read() #Lee una imagen del video
         result = DeepFace.analyze(frame,actions=['emotion'])
@@ -31,6 +39,9 @@ while True:
                     result['dominant_emotion'],
                    (150,150), font, 3, (0,0,255), 2, cv2.LINE_4);
         cv2.imshow('Demo video', frame)
+        #Se guardan los datos
+        datat.append(round( time.time()-t0, 2))
+        dataE.append(result['dominant_emotion'])
 
         if cv2.waitKey(2) & 0xFF == ord('q'):
             break
@@ -41,4 +52,7 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
+nt=np.array(datat)
+nE=np.array(dataE)
+np.savetxt('Data.csv', [nt,nE], delimiter=';', fmt='%s')
     
