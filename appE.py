@@ -3,6 +3,8 @@ from deepface import DeepFace
 import matplotlib.pyplot as plt
 import time
 import numpy as np
+import tensorflow as tf
+
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
