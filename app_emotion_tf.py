@@ -1,15 +1,16 @@
 import cv2
-from keras.models import load_model
-from keras.preprocessing.image import img_to_array
-from keras.preprocessing.image import image
+#from keras.models import load_model
+#from keras.preprocessing.image import img_to_array
+#from keras.preprocessing.image import image
 import matplotlib.pyplot as plt
 import time
 import numpy as np
-import tensorflow as tf
+#import tensorflow as tf
+import tflite_runtime.interpreter as tflite
 
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
-emotion_model = tf.lite.Interpreter(model_path = 'emotion.tflite')
+emotion_model = tflite.Interpreter(model_path = 'emotion.tflite')
 emotion_model.allocate_tensors()
 
 #Obtener inputs y outputs de los tensores
