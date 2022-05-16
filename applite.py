@@ -22,12 +22,10 @@ from tensorflow.lite.python.convert_phase import convert_phase
 from tensorflow.lite.python.convert_phase import SubComponent
 from tensorflow.lite.python.convert_saved_model import freeze_saved_model as _freeze_saved_model
 
-converter = tf.lite.TFLiteConverter.from_keras_model(load_model)
+
+converter = tf.lite.TFLiteConverter.from_keras_preprocessing_image(img_to_array)
 tflite_model = converter.convert()
-converter2 = tf.lite.TFLiteConverter.from_keras_preprocessing_image(img_to_array)
-tflite_model2 = converter2.convert()
-converter3 = tf.lite.TFLiteConverter.from_keras_preprocessing_image(image)
-tflite_model3 = converter3.convert()
+
 
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 emotion_model = tflite.Interpreter(model_path = 'emotion.tflite')
@@ -59,7 +57,6 @@ while True:
     time.sleep(Ts)
     try:
         ret,frame = cap.read() #Lee una imagen del video
-        #result = DeepFace.analyze(frame,actions=['emotion'])
 
         ##############################################
         #Hace el rectangulo alrededor de la cara
@@ -74,7 +71,7 @@ while True:
             roi_gray = gray[y:y+h,x:x+w]
             roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
             roi = roi_gray.astype('float')/255.0
-            roi = img_to_array(roi)
+            roi = tflite_model(roi)
             roi = np.expand_dims(roi,axis=0)
 
             #Se utiliza la imagen procesada en el modelo
