@@ -4,7 +4,7 @@ Para esto se deben seguir los siguientes pasos:
   1. Conectar la RPI2 a la computadora host que tenga el puerto Ethernet; debe tener acceso a internet.
   2. Encender la RPI2.
   3. En el menú de la RPI2, ejecutar python 3.
-  4. Correr la aplicación en la RPI2 con el comando "nombre_de_la_app.py", sin las comillas.
+  4. Correr la aplicación en la RPI2 con el comando "main_lite.py", sin las comillas.
   5. A continuación, deberá ejecutar Windows PowerShell.
   6. Luego tendrá que ejecutar el comando de la siguiente línea:
   
